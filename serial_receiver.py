@@ -16,7 +16,7 @@ try:
     print(f"Sent: {open_command.strip()}")
 
     # Allow time for the Arduino to process the command
-    time.sleep(1)
+    time.sleep(5)
 
     while True:
         # Read data from the serial port
