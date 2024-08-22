@@ -46,11 +46,13 @@
 ### Other Versions of the Script:
 - **`image_display_k.py`:** 
   - Works with keyboard input. Use the following commands:
-    - Press `O` (capital O) to start.
+    - Press `O` (O for Open) to start.
     - Enter numbers `1-16` followed by `Enter` to select images.
     - To overlay more images, enter another number.
+    - Enter up to 2 numbers
     - Press `R` to clear the screen if you want to start over.
     - Press `S` to submit your selection. You can submit even after entering just one number.
+    - Once User selection image is burnt then Ready is displayed again
 
 - **`image_display_t.py`:** 
   - A test file that uses serial input. Adjust debounce time (line 8) as needed:
