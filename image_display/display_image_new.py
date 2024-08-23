@@ -5,19 +5,19 @@ import time
 import subprocess
 import os
 import signal
-DEBOUNCE = 0.5  # in seconds Start with 0.1 seconds, adjust as needed
+DEBOUNCE = 0.5  # Start with 0.1 seconds, adjust as needed
 
 # Initialize Pygame
 pygame.init()
 
 # Get display information
 info = pygame.display.Info()
-screen_width = info.current_w
-screen_height = info.current_h
+screen_width = info.current_w*0.5 # runs at 1/2 res 
+screen_height = info.current_h*0.5 # runs at 1/2 res
 
 # Set up the display in fullscreen mode
-#screen = pygame.display.set_mode((screen_width, screen_height))
-screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN)
+screen = pygame.display.set_mode((screen_width, screen_height))
+#screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN)
 
 # Define the mapping of serial commands to image files
 image_files = {
@@ -40,7 +40,7 @@ image_files = {
 }
 
 # Configure serial port
-serial_port = '/dev/ttyACM0'  # Replace with your serial port typically /dev/ttyACM0
+serial_port = '/dev/ttyUSB0'  # Replace with your serial port typically /dev/ttyACM0 on the image display pi
 baud_rate = 9600
 ser = serial.Serial(serial_port, baud_rate, timeout=1)
 time.sleep(5) # wait 5 secs for serial to initialize
@@ -163,7 +163,7 @@ signal.signal(signal.SIGINT, graceful_shutdown)
 signal.signal(signal.SIGTERM, graceful_shutdown)
 
 # Initial check: delete the existing file on target if it exists
-delete_file_on_target()
+#delete_file_on_target()
 
 # Load special images
 ready_image = load_image("Ready.png")
@@ -243,10 +243,10 @@ while running:
             print(selected_images)
             print("LOCKOUT")  # LOCKOUT
             ser.write(b'LOCKOUT\n')  # Send LOCKOUT command via serial
-            save_selections(selected_images)  # Save selections and start the file removal process
+            #save_selections(selected_images)  # Save selections and start the file removal process
             time.sleep(10) # wait five seconds before issuing open
             # Once selections have been deleted, show the ready image again
-            #ser.write(b'OPEN\n') # this is just for testing comment this 
+            ser.write(b'OPEN\n') # this is just for testing comment this 
             print("READY") 
             current_image = ready_image
             screen.fill((0, 0, 0))

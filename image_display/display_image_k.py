@@ -159,7 +159,7 @@ selected_overlay = load_image("Selected.png")
 # Main loop
 running = True
 
-#display ready image for first time
+# Display ready image for the first time
 current_image = ready_image
 screen.fill((0, 0, 0))
 screen.blit(current_image, (0, 0))
@@ -174,7 +174,7 @@ while running:
             if event.key == pygame.K_ESCAPE or event.key == pygame.K_q:
                 running = False
             elif event.key == pygame.K_RETURN:  # Handle Enter key press
-                #print(key_buffer)
+                # print(key_buffer)
                 if key_buffer == "R":
                     current_image = None
                     screen.fill((0, 0, 0))
@@ -223,22 +223,25 @@ while running:
 
     # Check if SUBMIT was received, and handle saving and file checking
     if submit_received:
-        if selected_overlay:
-            current_image = selected_overlay
+        if len(selected_images) > 0:
+            # Execute if there is at least 1 selected image
+            if selected_overlay:
+                current_image = selected_overlay
+                screen.fill((0, 0, 0))
+                screen.blit(current_image, (0, 0))
+                pygame.display.flip()
+            print(selected_images)
+            print("LOCKOUT")  # Simulate LOCKOUT
+            save_selections(selected_images)  # Save selections and start the file removal process
+            time.sleep(5)  # Wait at least 5 seconds before a new file can begin
+            # Once selections have been deleted, show the ready image again
+            print("READY") 
+            current_image = ready_image
             screen.fill((0, 0, 0))
             screen.blit(current_image, (0, 0))
             pygame.display.flip()
-        print(selected_images)
-        print("LOCKOUT")  # Simulate LOCKOUT
-        save_selections(selected_images)  # Save selections and start the file removal process
-        time.sleep(2)
-        # once selections has been deleted  show ready image again
-        print("READY") 
-        current_image = ready_image
-        screen.fill((0, 0, 0))
-        screen.blit(current_image, (0, 0))
-        pygame.display.flip()
         submit_received = False  # Reset the flag
+    
     time.sleep(0.1)
 
 pygame.display.quit()
